@@ -1,8 +1,4 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.IO;
-using System.Text.Json;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace WebApiDemo.Controllers
 {
@@ -10,52 +6,71 @@ namespace WebApiDemo.Controllers
     [Route("[controller]")]
     public class MessageController : ControllerBase
     {
-        private readonly ILogger<MessageController> _logger;
-        public MessageController(ILogger<MessageController> logger)
+        public readonly Services.IChatService chatService;
+
+        public MessageController(Services.IChatService services) //конструктор
         {
-            _logger = logger;
-        }
-        private static List<Message> messages = new List<Message>();
-        private string messagesFilePath = "/Users/svtrev/Downloads/WebApiDemo/WebApiDemo/messages.json";
-        public MessageController()
-        {
-            if (System.IO.File.Exists(messagesFilePath))
-            {
-                var messagesData = System.IO.File.ReadAllText(messagesFilePath);
-                messages = JsonSerializer.Deserialize<List<Message>>(messagesData);
-            }
+            chatService = services;
         }
 
-        [HttpGet("messages")]
+        [HttpGet("messages")] //получение всех сообщений в чате по chat_id
         public IActionResult GetMessage(int chat_id)
         {
-            var chatMessages = messages.FindAll(m => m.chat_id == chat_id);
-            return Ok(chatMessages);
+            var messages = chatService.GetAllMessagesByChatId(chat_id);
+            if (messages.Count == 0)
+            {
+                return NotFound("No messages in this chat!");
+            }
+            return Ok(messages);
         }
-        [HttpPost("message")]
+
+        [HttpPost("message")] //добавление нового сообщения 
         public IActionResult AddMessage(int chat_id, string content, int user_id)
         {
             Message newMessage = new Message()
             {
-                id = messages.Count + 1,
+                id = chatService.GetAllMessages().Count + 1,
                 datetime = DateTime.Now,
                 chat_id = chat_id,
                 content = content,
                 user_id = user_id
             };
-            messages.Add(newMessage);
+            // Проверяем, существует ли пользователь с указанным id
+            if (chatService.GetUserById(newMessage.user_id) == null)
+            {
+                return NotFound("User not found");
+            }
+
+            // Проверяем, существует ли чат с указанным id
+            if (chatService.GetChatById(newMessage.chat_id) == null)
+            {
+                return NotFound("Chat not found");
+            }
+            chatService.AddMessage(newMessage);
             return Ok(newMessage);
         }
-        [HttpGet("{message_id}")]
-        public IActionResult GetUserById(int message_id)
+
+        [HttpGet("{message_id}")] //нахождения сообщения по его id
+        public IActionResult GetMessageById(int message_id)
         {
-            var message = messages.Find(m => m.id == message_id);
+            var message = chatService.GetMessageById(message_id);
             if (message == null)
             {
                 return NotFound();
             }
-            //var user = 
             return Ok(message);
+        }
+
+        [HttpDelete("{message_id}")]
+        public ActionResult DeleteMessageById(int message_id)
+        {
+            var message = chatService.GetMessageById(message_id);
+            if (message== null)
+            {
+                return NotFound("Message to remove not found");
+            }
+            chatService.RemoveMessage(message);
+            return Ok("Message deleted successfully");
         }
     }
 }

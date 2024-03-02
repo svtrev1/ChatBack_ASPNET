@@ -15,4 +15,12 @@
   <ItemGroup>
     <Compile Remove="WeatherForecast.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Json\" />
+    <None Remove="Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Json\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
 </Project>

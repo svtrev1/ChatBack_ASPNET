@@ -1,58 +1,4 @@
-﻿//using System;
-//using Microsoft.AspNetCore.Mvc;
-//namespace WebApiDemo.Controllers
-//{
-//    [ApiController]
-//    [Route("[controller]")]
-//    public class UserController : ControllerBase
-//    {
-//        private readonly ILogger<UserController> _logger;
-//        public UserController(ILogger<UserController> logger)
-//        {
-//            _logger = logger;
-//        }
-//        private static List<User> users = new List<User>();
-
-//        [HttpGet("users")]
-//        public IActionResult GetUsers()
-//        {
-//            return Ok(users);
-//        }
-
-//        [HttpPost("addUser")]
-//        public IActionResult AddUser(string username)
-//        {
-//            User newUser = new()
-//            {
-//                id = users.Count + 1,
-//                name = username
-//            };
-//            users.Add(newUser);
-//            _logger.LogInformation($"Создан новый пользователь: {newUser.name}");
-//            return Ok(newUser);
-//        }
-
-//        [HttpGet("{user_id}")]
-//        public IActionResult GetUserById(int user_id)
-//        {
-//            var user = users.Find(u => u.id == user_id);
-//            if (user == null)
-//            {
-//                return NotFound();
-//            }
-//            return Ok(user);
-//        }
-//    }
-
-//}
-
-
-
-
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Text.Json;
-using System.IO;
+﻿using Microsoft.AspNetCore.Mvc;
 namespace WebApiDemo.Controllers
 {
     [ApiController]
@@ -64,81 +10,70 @@ namespace WebApiDemo.Controllers
         //{
         //    _logger = logger;
         //}
-        private static List<User> users = new List<User>();
-        private string usersFilePath = "/Users/svtrev/Downloads/WebApiDemo/WebApiDemo/users.json";
-
-        public UserController()
+        private readonly Services.IChatService chatService;
+        public UserController(Services.IChatService services)
         {
-            if (System.IO.File.Exists(usersFilePath))
-            {
-                var userData = System.IO.File.ReadAllText(usersFilePath);
-                users = JsonSerializer.Deserialize<List<User>>(userData);
-            }
+            chatService = services;
         }
-        [HttpPost("addUser")]
-        public IActionResult AddUser(string username)
+        [HttpPost("addUser")] //добавления нового пользователя
+        public IActionResult AddUser(string username, string password)
         {
-            if (users.Count > 0)
+            if (chatService.GetAllUsers().Count > 0) //если список пользователей не пустой
             {
-                int lastUserId = users.Max(u => u.id);
+                int lastUserId = chatService.GetAllUsers().Max(u => u.id);
                 User newUser = new()
                 {
                     id = lastUserId + 1,
                     name = username
                 };
-                users.Add(newUser);
-                SaveUsersToJsonFile();
+                chatService.AddUser(newUser);
                 return Ok(newUser);
             }
-            else
+            else //если список пользователей пустой
             {
                 User newUser = new()
                 {
                     id = 1,
                     name = username
                 };
-                users.Add(newUser);
-                SaveUsersToJsonFile();
+                chatService.AddUser(newUser);
                 return Ok(newUser);
             }
         }
 
-        [HttpGet("users")]
+        [HttpGet("users")] //получение всех пользователей
         public IActionResult GetUsers()
         {
+            var users = chatService.GetAllUsers();
+            if (users.Count == 0)
+            {
+                return NotFound("No users found!");
+            }
             return Ok(users);
         }
 
-        [HttpGet("{user_id}")]
+        [HttpGet("{user_id}")] //нахождение пользователя по его id
         public IActionResult GetUserById(int user_id)
         {
-            var user = users.Find(u => u.id == user_id);
+            var user = chatService.GetUserById(user_id);
             if (user == null)
             {
-                return NotFound();
+                return NotFound("User not found!");
             }
             return Ok(user);
         }
 
-        [HttpDelete("{user_id}")]
+        [HttpDelete("{user_id}")] //удаление пользователя по его id
         public ActionResult DeleteUserById(int user_id)
         {
-            var userToRemove = users.Find(u => u.id == user_id);
-            if (userToRemove == null)
+
+            var user = chatService.GetUserById(user_id);
+            if (user == null)
             {
-                return NotFound("User not found");
+                return NotFound("User to remove not found!");
             }
-            users.Remove(userToRemove);
-            SaveUsersToJsonFile();
+            chatService.RemoveUser(user);
             return Ok("User deleted successfully");
-        }
-
-
-
-        private void SaveUsersToJsonFile()
-        {
-            var usersData = JsonSerializer.Serialize(users);
-            System.IO.File.WriteAllText(usersFilePath, usersData);
         }
     }
 }

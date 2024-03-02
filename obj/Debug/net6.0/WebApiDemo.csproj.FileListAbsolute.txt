@@ -56,5 +56,6 @@
 /Users/svtrev/Downloads/WebApiDemo/WebApiDemo/obj/Debug/net6.0/WebApiDemo.genruntimeconfig.cache
 /Users/svtrev/Downloads/WebApiDemo/WebApiDemo/obj/Debug/net6.0/ref/WebApiDemo.dll
 /Users/svtrev/Downloads/WebApiDemo/WebApiDemo/bin/Debug/net6.0/Newtonsoft.Json.dll
-/Users/svtrev/Downloads/WebApiDemo/WebApiDemo/bin/Debug/net6.0/Controllers/users.json
-/Users/svtrev/Downloads/WebApiDemo/WebApiDemo/bin/Debug/net6.0/users.json
+/Users/svtrev/Downloads/WebApiDemo/WebApiDemo/bin/Debug/net6.0/Json/users.json
+/Users/svtrev/Downloads/WebApiDemo/WebApiDemo/bin/Debug/net6.0/Json/chats.json
+/Users/svtrev/Downloads/WebApiDemo/WebApiDemo/bin/Debug/net6.0/Json/messages.json
