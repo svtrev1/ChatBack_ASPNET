@@ -5,6 +5,7 @@ namespace WebApiDemo
     {
         public int id { get; set; }
         public string name { get; set; }
+        public List<int> users_id { get; set; }
     }
 }
 

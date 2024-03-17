@@ -57,5 +57,14 @@
 /Users/svtrev/Downloads/WebApiDemo/WebApiDemo/obj/Debug/net6.0/ref/WebApiDemo.dll
 /Users/svtrev/Downloads/WebApiDemo/WebApiDemo/bin/Debug/net6.0/Newtonsoft.Json.dll
 /Users/svtrev/Downloads/WebApiDemo/WebApiDemo/bin/Debug/net6.0/Json/users.json
-/Users/svtrev/Downloads/WebApiDemo/WebApiDemo/bin/Debug/net6.0/Json/chats.json
 /Users/svtrev/Downloads/WebApiDemo/WebApiDemo/bin/Debug/net6.0/Json/messages.json
+/Users/svtrev/Downloads/WebApiDemo/WebApiDemo/bin/Debug/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/svtrev/Downloads/WebApiDemo/WebApiDemo/bin/Debug/net6.0/Microsoft.IdentityModel.Abstractions.dll
+/Users/svtrev/Downloads/WebApiDemo/WebApiDemo/bin/Debug/net6.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/svtrev/Downloads/WebApiDemo/WebApiDemo/bin/Debug/net6.0/Microsoft.IdentityModel.Logging.dll
+/Users/svtrev/Downloads/WebApiDemo/WebApiDemo/bin/Debug/net6.0/Microsoft.IdentityModel.Protocols.dll
+/Users/svtrev/Downloads/WebApiDemo/WebApiDemo/bin/Debug/net6.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/svtrev/Downloads/WebApiDemo/WebApiDemo/bin/Debug/net6.0/Microsoft.IdentityModel.Tokens.dll
+/Users/svtrev/Downloads/WebApiDemo/WebApiDemo/bin/Debug/net6.0/System.IdentityModel.Tokens.Jwt.dll
+/Users/svtrev/Downloads/WebApiDemo/WebApiDemo/bin/Debug/net6.0/Json/tokens.json
+/Users/svtrev/Downloads/WebApiDemo/WebApiDemo/bin/Debug/net6.0/Json/chats.json

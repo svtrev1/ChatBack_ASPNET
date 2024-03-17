@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace WebApiDemo.Controllers
 {
@@ -7,10 +8,12 @@ namespace WebApiDemo.Controllers
     public class MessageController : ControllerBase
     {
         public readonly Services.IChatService chatService;
+        private readonly IHubContext<ChatHub> hubContext;
 
-        public MessageController(Services.IChatService services) //конструктор
+        public MessageController(Services.IChatService services, IHubContext<ChatHub> context) //конструктор
         {
             chatService = services;
+            hubContext = context;
         }
 
         [HttpGet("messages")] //получение всех сообщений в чате по chat_id
@@ -24,7 +27,7 @@ namespace WebApiDemo.Controllers
             return Ok(messages);
         }
 
-        [HttpPost("message")] //добавление нового сообщения 
+        [HttpPost("addMessage")] //добавление нового сообщения 
         public IActionResult AddMessage(int chat_id, string content, int user_id)
         {
             Message newMessage = new Message()
@@ -47,6 +50,7 @@ namespace WebApiDemo.Controllers
                 return NotFound("Chat not found");
             }
             chatService.AddMessage(newMessage);
+            hubContext.Clients.All.SendAsync("ReceiveMessage", newMessage);
             return Ok(newMessage);
         }
 

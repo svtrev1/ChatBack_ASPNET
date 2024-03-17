@@ -59,8 +59,8 @@ namespace WebApiDemo.Controllers
             return Ok(chat);
         }
 
-        [HttpDelete("{chat_id}")] //удаление пользователя по его id
-        public ActionResult DeleteChatById(int chat_id)
+        [HttpDelete("{chat_id}")] //удаление чата по его id
+        public IActionResult DeleteChatById(int chat_id)
         {
             var chat = chatService.GetChatById(chat_id);
             if (chat == null)
@@ -69,6 +69,49 @@ namespace WebApiDemo.Controllers
             }
             chatService.RemoveChat(chat);
             return Ok("Chat deleted successfully");
+        }
+
+        [HttpPost("addUserInChat")]
+        public IActionResult AddUserInChat(int chat_id, int user_id)
+        {
+            var chat = chatService.GetChatById(chat_id);
+            if (chat == null)
+            {
+                return NotFound("Chat not found!");
+            }
+            var user = chatService.GetUserById(user_id);
+            if (user == null)
+            {
+                return NotFound("User not found!");
+            }
+            chatService.AddUserInChat(chat_id, user_id);
+            return Ok("User added");
+        }
+
+        [HttpGet("getUserChats")]
+        public IActionResult GetUserChats(int user_id)
+        {
+            var userChats = chatService.GetUserChats(user_id);
+            if (userChats == null || userChats.Count == 0)
+            {
+                return NotFound("User is not part of any chat");
+            }
+
+            var chatNames = userChats.Select(chat => chat.name).ToList();
+            return Ok(chatNames);
+
+        }
+
+        [HttpGet("getChatIdByName")]
+        public IActionResult GetChatIdByName(string chatname)
+        {
+            var nameId = chatService.GetChatIdByName(chatname);
+            if (nameId == -1)
+            {
+                return NotFound("Chat not found");
+            }
+            return Ok(nameId);
+
         }
     }
 }

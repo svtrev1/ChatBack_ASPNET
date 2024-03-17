@@ -75,5 +75,57 @@ namespace WebApiDemo.Controllers
             chatService.RemoveUser(user);
             return Ok("User deleted successfully");
         }
+
+        //Auth
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(string username, string password)
+        {
+            int lastId;
+            if (chatService.GetAllUsers().Count > 0)
+            {
+                lastId = chatService.GetAllUsers().Max(u => u.id);
+            }
+            else
+            {
+                lastId = 0;
+            }
+            User newUser = new()
+            {
+                id = lastId + 1,
+                name = username,
+                password = password
+            };
+            string result = await chatService.RegisterUser(newUser);
+            return Ok(result);
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(string username, string password)
+        {
+            User newUser = new()
+            {
+                id = 0,
+                name = username,
+                password = password
+            };
+            int token = await chatService.LoginUser(newUser);
+            if (token == -1)
+            {
+                return BadRequest("User not found!");
+            }
+            if (token == -2)
+            {
+                return BadRequest("Password is wrong");
+            }
+            return Ok(token);
+        }
+
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout(int id)
+        {
+            User newUser = chatService.GetUserById(id);
+            await chatService.LogoutUser(id);
+            return Ok("Successfully logged out");
+        }
     }
 }
