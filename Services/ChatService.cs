@@ -66,6 +66,15 @@ namespace WebApiDemo.Services
         {
             return users.Find(u => u.id == id);
         }
+        public User GetUserByName(string username)
+        {
+            User temp = users.Find(u => u.name == username);
+            if (temp == null)
+            {
+                return null;
+            }
+            return temp;
+        }
         public Chat GetChatById(int id)
         {
             return chats.Find(c => c.id == id);
@@ -240,6 +249,15 @@ namespace WebApiDemo.Services
             return temp.id;
         }
 
+        public string GetChatNameById(int chat_id)
+        {
+            Chat temp = chats.Find(c => c.id == chat_id);
+            if (temp == null)
+            {
+                return null;
+            }
+            return temp.name;
+        }
     }
 }
 

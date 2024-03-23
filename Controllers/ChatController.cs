@@ -72,19 +72,19 @@ namespace WebApiDemo.Controllers
         }
 
         [HttpPost("addUserInChat")]
-        public IActionResult AddUserInChat(int chat_id, int user_id)
+        public IActionResult AddUserInChat(int chat_id, string username)
         {
             var chat = chatService.GetChatById(chat_id);
             if (chat == null)
             {
                 return NotFound("Chat not found!");
             }
-            var user = chatService.GetUserById(user_id);
+            var user = chatService.GetUserByName(username);
             if (user == null)
             {
                 return NotFound("User not found!");
             }
-            chatService.AddUserInChat(chat_id, user_id);
+            chatService.AddUserInChat(chat_id, user.id);
             return Ok("User added");
         }
 
@@ -111,6 +111,18 @@ namespace WebApiDemo.Controllers
                 return NotFound("Chat not found");
             }
             return Ok(nameId);
+
+        }
+
+        [HttpGet("getChatNameById")]
+        public IActionResult GetChatNameById(int chat_id)
+        {
+            var name = chatService.GetChatNameById(chat_id);
+            if (name == null)
+            {
+                return NotFound("Chat not found");
+            }
+            return Ok(name);
 
         }
     }

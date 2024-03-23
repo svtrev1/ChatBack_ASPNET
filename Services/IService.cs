@@ -6,6 +6,7 @@ namespace WebApiDemo.Services
     {
         //нахождение по id
         User GetUserById(int id);
+        User GetUserByName(string username);
         Chat GetChatById(int id);
         Message GetMessageById(int id);
         //нахождение по имени id пользователя
@@ -31,6 +32,7 @@ namespace WebApiDemo.Services
         void AddUserInChat(int chat_id, int user_id);
         List<Chat> GetUserChats(int user_id);
         int GetChatIdByName(string chatname);
+        string GetChatNameById(int chat_id);
     }
 }
 
