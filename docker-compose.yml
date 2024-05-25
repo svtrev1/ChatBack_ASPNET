@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  webapidemo:
+    image: ${DOCKER_REGISTRY-}webapidemo
+    build:
+      context: .
+      dockerfile: WebApiDemo/Dockerfile
+  frontend:
+    build:
+      context: /Users/svtrev/Desktop/6sem/TRPO/my-vue-app
+      dockerfile: Dockerfile
+    volumes:
+      - "./:/app"
+    ports:
+      - "5173:5173"

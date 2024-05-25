@@ -1,0 +1,52 @@
+﻿<Properties StartupConfiguration="{167AA6F2-1AF6-4205-841F-A6ECA82FFB79}|Default">
+  <MonoDevelop.Ide.ItemProperties.WebApiDemo PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="docker-compose.yml">
+    <Files>
+      <File FileName="WebApiDemo/Controllers/UserController.cs" Line="1" Column="1" />
+      <File FileName="WebApiDemo/Services/ChatService.cs" />
+      <File FileName="WebApiDemo/User.cs" />
+      <File FileName="WebApiDemo/Services/IService.cs" />
+      <File FileName="WebApiDemo/README.md" />
+      <File FileName="WebApiDemo/Program.cs" />
+      <File FileName="WebApiDemo/Json/users.json" />
+      <File FileName="WebApiDemo/Json/tokens.json" />
+      <File FileName="WebApiDemo/Token.cs" />
+      <File FileName="WebApiDemo/Json/messages.json" />
+      <File FileName="WebApiDemo/Controllers/ChatController.cs" />
+      <File FileName="WebApiDemo/Message.cs" />
+      <File FileName="WebApiDemo/Chat.cs" />
+      <File FileName="WebApiDemo/Controllers/MessageController.cs" />
+      <File FileName="WebApiDemo/appsettings.json" />
+      <File FileName="WebApiDemo/Controllers/ChatHub.cs" />
+      <File FileName="WebApiDemo/Json/chats.json" />
+      <File FileName="WebApiDemo/Dockerfile" Line="1" Column="1" />
+      <File FileName="docker-compose.yml" Line="16" Column="18" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="WebApiDemo" expanded="True">
+            <Node name="docker-compose" expanded="True" />
+            <Node name="WebApiDemo" expanded="True">
+              <Node name="Controllers" expanded="True">
+                <Node name="UserController.cs" selected="True" />
+              </Node>
+              <Node name="Json" expanded="True" />
+              <Node name="Services" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.docker-compose PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+</Properties>

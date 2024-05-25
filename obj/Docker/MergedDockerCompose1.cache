@@ -1,0 +1,52 @@
+name: dockercompose2823551166517895848
+services:
+  frontend:
+    build:
+      context: /Users/svtrev/Desktop/6sem/TRPO/my-vue-app
+      dockerfile: Dockerfile
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 5173
+        published: "5173"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /Users/svtrev/Downloads/WebApiDemo
+        target: /app
+        bind:
+          create_host_path: true
+  webapidemo:
+    build:
+      context: /Users/svtrev/Downloads/WebApiDemo
+      dockerfile: WebApiDemo/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: https://+:443;http://+:80
+    image: webapidemo
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 80
+        protocol: tcp
+      - mode: ingress
+        target: 443
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /Users/svtrev/.aspnet/https
+        target: /root/.aspnet/https
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: /Users/svtrev/.microsoft/usersecrets
+        target: /root/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+networks:
+  default:
+    name: dockercompose2823551166517895848_default
